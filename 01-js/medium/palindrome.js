@@ -4,6 +4,14 @@
 */
 
 function isPalindrome(str) {
+  const caseInsensitvieStr = str
+    .split("")
+    .filter((c) => c !== "")
+    .join("")
+    .toLowerCase();
+  for (let i = 0, j = str.length - 1; i <= j; i++, j--) {
+    if (caseInsensitvieStr[i] !== caseInsensitvieStr[j]) return false;
+  }
   return true;
 }
 
