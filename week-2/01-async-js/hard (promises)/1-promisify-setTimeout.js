@@ -3,6 +3,13 @@
 */
 
 function wait(n) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, n * 1000);
+  });
 }
+// console.log("first");
+// const delay = wait(5).then((res) => console.log(res));
 
 module.exports = wait;
