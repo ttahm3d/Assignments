@@ -39,11 +39,55 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-  const express = require('express');
-  const bodyParser = require('body-parser');
-  
-  const app = express();
-  
-  app.use(bodyParser.json());
-  
-  module.exports = app;
+const express = require("express");
+const uuid = require("uuid");
+const app = express();
+
+const todos = [];
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.get("/todos", (req, res) => {
+  res.send(todos);
+});
+
+app.get("/todos/:id", (req, res) => {
+  const todo = todos.find((todo) => todo.id === req.params.id);
+  if (!todo) {
+    res.status(404).send();
+  }
+  res.send(todo);
+});
+
+app.post("/todos", (req, res) => {
+  const todo = {
+    id: uuid.v4(),
+    title: req.body.title,
+    description: req.body.description,
+    completed: req.body.completed,
+  };
+  todos.push(todo);
+  res.status(201).json({ id: todo.id });
+});
+
+app.put("/todos/:id", (req, res) => {
+  const todoIndex = todos.findIndex((todo) => todo.id === req.params.id);
+  if (todoIndex === -1) {
+    res.status(404);
+  }
+  todos[todoIndex].title = req.body.title;
+  todos[todoIndex].completed = req.body.completed;
+  res.status(200).json(todos[todoIndex]);
+});
+
+app.delete("/todos/:id", (req, res) => {
+  const todo = todos.find((todo) => todo.id === req.params.id);
+  if (!todo) {
+    res.status(404);
+  }
+  todos.filter((todo) => todo.id !== req.params.id);
+  res.status(200).send();
+});
+
+module.exports = app;
