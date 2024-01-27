@@ -12,10 +12,51 @@
     - For any other route not defined in the server return 404
     Testing the server - run `npm run test-fileServer` command in terminal
  */
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.get("/files", (req, res) => {
+  fs.readdir("./files", "utf-8", (err, files) => {
+    if (err) {
+      res.status(400).json({
+        message: "Error reading directory",
+      });
+      throw new Error("Error reading files from the given directory");
+    }
+    res.status(200).json({
+      files: files,
+    });
+  });
+});
+
+app.get("/file/:filename", (req, res) => {
+  const filename = req.params.filename;
+  if (!filename) {
+    res.status(400).json({ message: "Please provide a filename" });
+  }
+  fs.readFile(
+    path.join(__dirname, "./files", filename),
+    "utf-8",
+    (err, data) => {
+      if (err) {
+        res.status(404).send("File not found");
+      }
+      res.send(data);
+    }
+  );
+});
+
+app.listen(3001, () => {
+  console.log("App running on port 3001");
+});
+
+app.all("*", (req, res) => {
+  res.status(404).send("Route not found");
+});
 
 module.exports = app;
