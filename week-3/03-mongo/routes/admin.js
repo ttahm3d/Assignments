@@ -3,16 +3,19 @@ const adminMiddleware = require("../middleware/admin");
 const router = Router();
 
 // Admin Routes
-router.post('/signup', (req, res) => {
-    // Implement admin signup logic
+router.post("/signup", (req, res) => {
+  // Implement admin signup logic
+  res.send("admin signup");
 });
 
-router.post('/courses', adminMiddleware, (req, res) => {
-    // Implement course creation logic
+router.post("/courses", adminMiddleware, (req, res) => {
+  // Implement course creation logic
+  res.send("admin courses post");
 });
 
-router.get('/courses', adminMiddleware, (req, res) => {
-    // Implement fetching all courses logic
+router.get("/courses", adminMiddleware, (req, res) => {
+  // Implement fetching all courses logic
+  res.send("admin courses get");
 });
 
 module.exports = router;
