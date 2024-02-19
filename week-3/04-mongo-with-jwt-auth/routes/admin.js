@@ -3,7 +3,7 @@ const adminMiddleware = require("../middleware/admin");
 const { JWT_SECRET } = require("../config");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User } = require("../db/index");
+const { Admin, Course } = require("../db/index");
 
 // Admin Routes
 router.post("/signup", async (req, res) => {
@@ -17,9 +17,9 @@ router.post("/signin", async (req, res) => {
   // Implement admin signup logic
   const { username, password } = req.body;
   if (!username || !password) res.status(401);
-  const user = User.findOne({ username, password });
+  const user = Admin.findOne({ username, password });
   if (user) {
-    const token = JWT.sign({ username }, JWT_SECRET);
+    const token = jwt.sign({ username }, JWT_SECRET);
     res.send({ token });
   } else {
     res.status(411).send({ message: "Incorrect inputs" });
