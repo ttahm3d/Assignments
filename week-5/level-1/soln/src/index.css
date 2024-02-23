@@ -1,0 +1,46 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.card {
+  padding: 1rem;
+  box-shadow: 0 0 4px #595959;
+  display: inline-block;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+.card-name-section {
+  padding: 0.5rem 0;
+}
+
+.card-interests-section {
+  padding: 0.5rem 0;
+}
+
+.card-interests-section > div::before {
+  content: "> ";
+}
+
+.card-links-section {
+  padding: 0.5rem 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.card-link {
+  background-color: #4285f4;
+  color: white;
+  padding: 0.7rem;
+}
